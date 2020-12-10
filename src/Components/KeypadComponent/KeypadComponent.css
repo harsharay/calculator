@@ -1,0 +1,7 @@
+.keypadComponentStyle {
+    border: 1px solid black;
+    width: 1fr;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+}
