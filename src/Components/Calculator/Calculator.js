@@ -6,26 +6,11 @@ import "./Calculator.css"
 const Calculator = () => {
 
     const [numbers, setNumbers] = useState([])
-    // const [first, setFirst] = useState("")
-    // const [second, setSecond] = useState("")
-    const [numbersStack, setNumberStack] = useState("")
-    const [operands, setOperands] = useState("")
-    // const { result, setResult } = useState(0)
+    const [first, setFirst] = useState("")
+    const [second, setSecond] = useState("")
+    const [currentOperator, setCurrentOperator] = useState("")
+    const [result, setResult] = useState("")
 
-    // const operations = {
-    //     "+" : function(a,b) {
-    //         return a+b
-    //     },
-    //     "-" : function(a,b) {
-    //         return a-b
-    //     },
-    //     "*" : function(a,b) {
-    //         return a*b
-    //     },
-    //     "/" : function(a,b) {
-    //         return a/b
-    //     }
-    // }
 
     useEffect(() => {
         for(let i=1; i<10; i++) {
@@ -33,52 +18,49 @@ const Calculator = () => {
         }
     },[])
 
-    useEffect(() => {
-        console.log(38,numbersStack)
-    },[numbersStack])
-
-
-    const handleAddingItemsToStack = element => {
-        if(element === "Clear"){
-            setNumberStack(0)
-        }
-        else {
-            setNumberStack(prev => prev+element)
-        }
-    }
-
-    const handleCalculation = (element) => {
-        // if(element === "+" || element === "-" || element === "*" || element === "/") {
-        //     // eslint-disable-next-line no-eval
-        //     setNumberStack(eval(numbersStack))
-        // }
-        if(element === "=") {
-            // eslint-disable-next-line no-eval
-            setNumberStack(eval(numbersStack))
+    const addingToNumberStack = element => {
+        if(element === "+" || element === "-" || element ==="*" || element === "/") {
+            if(first && second) {
+                // eslint-disable-next-line no-eval
+                setResult(eval(first+currentOperator+second))
+                // eslint-disable-next-line no-eval
+                setFirst(eval(first+currentOperator+second))
+                setSecond("")
+                setCurrentOperator(element)
+            } else {
+                setCurrentOperator(element)
+            }
+        } else {
+            if(currentOperator) {
+                setSecond(prev => prev+element)
+            } else {
+                setFirst(prev => prev+element)
+            }
         }
     }
+    
 
     return (
         <div className="calculatorMainBlock">
             <div className="calculatorOutput" >
-                {numbersStack}
+                {result || second || first}
             </div>
             <div className="calculatorKeypad">
                 <div className="calculatorNumbers">
                     { numbers.map((number, index) => {
                         return (
-                            <KeypadComponent number={number} value={number} key={index} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
+                            <KeypadComponent number={number} value={number} key={index} addingToNumberStack={addingToNumberStack}/>
                         )
                     }) }
-                    <KeypadComponent number={"Clear"} value={"Clear"} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
-                    <KeypadComponent number={0}  value={0} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
-                    <KeypadComponent number={"="} value={"="} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
+                    <KeypadComponent number={"Clear"} value={"Clear"} addingToNumberStack={addingToNumberStack}/>
+                    <KeypadComponent number={0}  value={0} addingToNumberStack={addingToNumberStack}/>
+                    <KeypadComponent number={"="} value={"="} addingToNumberStack={addingToNumberStack}/>
                 </div>
                 <div className="calculatorOperationsButton">
-                    <KeypadComponent number={"Add(+)"} value={"+"} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
-                    <KeypadComponent number={"Subtract(-)"} value={"-"} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
-                    <KeypadComponent number={"Multiply(*)"} value={"*"} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
-                    <KeypadComponent number={"Divide(/)"} value={"/"} handleAddingItemsToStack={handleAddingItemsToStack} handleCalculation={handleCalculation}/>
+                    <KeypadComponent number={"Add(+)"} value={"+"} addingToNumberStack={addingToNumberStack}/>
+                    <KeypadComponent number={"Subtract(-)"} value={"-"} addingToNumberStack={addingToNumberStack}/>
+                    <KeypadComponent number={"Multiply(*)"} value={"*"} addingToNumberStack={addingToNumberStack}/>
+                    <KeypadComponent number={"Divide(/)"} value={"/"} addingToNumberStack={addingToNumberStack}/>
                 </div>
             </div>
         </div>

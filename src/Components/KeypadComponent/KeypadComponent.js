@@ -2,13 +2,12 @@ import React, { useState } from "react"
 
 import "./KeypadComponent.css"
 
-const KeypadComponent = ({ number, value, handleAddingItemsToStack, handleCalculation }) => {
+const KeypadComponent = ({ number, value, addingToNumberStack }) => {
 
 
     const handleButtonClick = num => {
         console.log(num)
-        handleAddingItemsToStack(num)
-        handleCalculation(num)
+        addingToNumberStack(num)
     }
 
     return (
