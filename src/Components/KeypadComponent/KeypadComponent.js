@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import "./KeypadComponent.css"
 
-const KeypadComponent = ({ number, value, addingToNumberStack }) => {
+const KeypadComponent = ({ number, value, addingToNumberStack, lightDark }) => {
 
 
     const handleButtonClick = num => {
@@ -11,7 +11,7 @@ const KeypadComponent = ({ number, value, addingToNumberStack }) => {
     }
 
     return (
-        <div className="keypadComponentStyle" onClick={() => handleButtonClick(value)}>
+        <div className={ `${lightDark ? 'lightMode' : 'darkMode'} keypadComponentStyle` } onClick={() => handleButtonClick(value)}>
             <p>{number}</p>
         </div>
     )

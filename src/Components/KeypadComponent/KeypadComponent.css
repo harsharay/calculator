@@ -5,3 +5,12 @@
     cursor: pointer;
     font-weight: 600;
 }
+
+.lightMode {
+    background-color: #f0f0f0;
+}
+
+.darkMode {
+    background-color: #666;
+    color: #fff;
+}
